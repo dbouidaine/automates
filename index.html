@@ -29,7 +29,7 @@
               <a class="nav-link active" data-toggle="tab" href="#home">Introduire</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+              <a class="nav-link" data-toggle="tab" href="#menu1">Résultats</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
@@ -227,15 +227,76 @@
                     </div>
                   </div><br>
                 </div>
-                <div class="right"><button onclick="maj()" class="btn btn-lg btn-block aqua-gradient">Mise à jour de l'automate</button></div>
+                <div class="right"><button onclick="updateReduction()" class="btn btn-lg btn-block aqua-gradient">Mise à jour de l'automate</button></div>
                 <br>
                 
             </div>
             <!--/Intriductuin de l'automate-------------------------------------------->
+            <!--Les Résultats-------------------------------------------->
             <div id="menu1" class="container tab-pane fade"><br>
-              <h3>Menu 1</h3>
+              <h3>Results</h3>
               <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              
+              <div>
+                <br>
+
+                <div id="accordion2">
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                        # Réduction
+                      </a>
+                    </div>
+                    <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                      <div class="card-body">
+                       La Réduction de l'automate:
+                       <table class="table un table-bordered table-responsive-md table-striped text-center">
+                        <thead>
+                          <tr>
+                            <th class="text-center">l'Etat Avant</th>
+                            <th class="text-center">l'Alphabet</th>
+                            <th class="text-center">l'Etat Après</th>
+                          </tr>
+                        </thead>
+                        <tbody  id="reduction">
+                        </tbody>
+                      </table>           
+                      </div>
+                    </div>
+                  </div><br>
+                
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
+                        # Réduction
+                      </a>
+                    </div>
+                    <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
+                      <div class="card-body">
+                        La Réduction de l'automate:
+                      </div>
+                    </div>
+                  </div><br>
+                
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree2">
+                        Collapsible Group Item #3
+                      </a>
+                    </div>
+                    <div id="collapseThree2" class="collapse" data-parent="#accordion2">
+                      <div class="card-body">
+                        Lorem ipsum..
+                      </div>
+                    </div>
+                  </div><br>
+                
+                </div>
+
+              </div>
+
             </div>
+            <!--/Les Résultats-------------------------------------------->
             <div id="menu2" class="container tab-pane fade"><br>
               <h3>Menu 2</h3>
               <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
