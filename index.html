@@ -40,18 +40,18 @@
           <div class="tab-content">
             <!--Intriductuin de l'automate-------------------------------------------->
             <div id="home" class="container tab-pane active"><br>
-              <h3>Introduire l'automate</h3>
+              <h3>Décrit l'automate</h3>
               <div id="accordion">
                 <br>
                 
                   <!--Alphabet-------------------------------------------------------------------->
-                  <div class="card">
+                  <div class="card disabled">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                      <a class="card-link text-black-50" data-toggle="collapse" href="#collapseOne">
                         #1 Introduire l'ensemble d'alphabets
                       </a>
                     </div>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div id="collapseOne" class="collapse" data-parent="#accordion">
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -82,9 +82,9 @@
                   </div><br>
                   <!----------------------------------------------------------------------------->  
                   <!--Les Etats-------------------------------------------------------------------->
-                  <div class="card">
+                  <div class="card disabled">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+                      <a class="card-link text-black-50" data-toggle="collapse" href="#collapseTwo">
                         #2 Introduire l'ensemble d'états
                       </a>
                     </div>
@@ -125,7 +125,7 @@
                         #3 Désigner l'état initial
                       </a>
                     </div>
-                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                    <div id="collapseThree" class="collapse show" data-parent="#accordion">
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -227,19 +227,18 @@
                     </div>
                   </div><br>
                 </div>
-                <div class="right"><button onclick="updateTransition()" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour</button></div>
+                <div class="right"><button onclick="updateTransition()" id="updateTransitions" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checked" style="display: none;" class="fas fa-check"></i></button></div>
                 <br>
                 
             </div>
             <!--/Intriductuin de l'automate-------------------------------------------->
             <!--Les Résultats-------------------------------------------->
             <div id="menu1" class="container tab-pane fade"><br>
-              <h3>Results</h3>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <h3>Resultats</h3>
+              <p>Operations sur les automates</p>
               
               <div>
                 <br>
-
                 <div id="accordion2">
                   <div class="card">
                     <div class="card-header">
@@ -249,18 +248,20 @@
                     </div>
                     <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
                       <div class="card-body">
-                       La Réduction de l'automate:
-                       <table class="table un table-bordered table-responsive-md table-striped text-center">
-                        <thead>
-                          <tr>
-                            <th class="text-center">l'Etat Avant</th>
-                            <th class="text-center">l'Alphabet</th>
-                            <th class="text-center">l'Etat Après</th>
-                          </tr>
-                        </thead>
-                        <tbody  id="reduction">
-                        </tbody>
-                      </table>           
+                        <div>
+                          <strong>Les Transitions</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Avant</th>
+                                <th class="text-center">le Mot</th>
+                                <th class="text-center">l'Etat Après</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="reduction">
+                            </tbody>
+                          </table>
+                        </div>          
                       </div>
                     </div>
                   </div><br>
@@ -268,12 +269,22 @@
                   <div class="card">
                     <div class="card-header">
                       <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
-                        # Réduction
+                        # Non Deterministe => Deterministe:
                       </a>
                     </div>
                     <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
                       <div class="card-body">
-                        La Réduction de l'automate:
+                        <table class="table un table-bordered table-responsive-md table-striped text-center">
+                          <thead>
+                            <tr>
+                              <th class="text-center">l'Etat Avant</th>
+                              <th class="text-center">l'Alphabet</th>
+                              <th class="text-center">l'Etat Après</th>
+                            </tr>
+                          </thead>
+                          <tbody  id="deterministe">
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   </div><br>
