@@ -16,7 +16,7 @@ function getTransitions(){
 /*--------------------------------------------------------------*/
 /*Les Transitions après réduction*/
 function getTransitionsR(){
-    var transitions = $('#reduction tr:has(td)').map(function(i, v) {
+    var transitions = $('#redTransitions tr:has(td)').map(function(i, v) {
         var $td =  $('td', this);
             return {
                      id: ++i,
@@ -59,35 +59,6 @@ function eif()
     var etatsFin=getEtatsFin();
     console.log("etatsFin");
     console.log(etatsFin);
-}
-/*--------------------------------------------------------------*/
-/*--------------------------------------------------------------*/
-/*Fusionne les transitions qui ont le meme etat de départ + le meme mot a lire, donne un Map, le clé est l'état de départ + 
-le mot à lire, la valeur est l'état d'arriv*/
-function fusion(){
-    var transitions=getTransitionsR();
-    var redMap=new Map();
-    var i=0,key,val;
-    var x;
-    while(i<transitions.length)
-    {
-        key=[transitions[i].start,transitions[i].word].toString();
-        val=transitions[i].finish;
-        if (redMap.has(key))
-        {
-            x=redMap.get(key);
-            x.push(val);
-            redMap[key]=x;
-        }
-        else
-        {
-            x = [];
-            x.push(val);
-            redMap.set(key,x);
-        }
-        i++;
-    }
-    return redMap;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -136,7 +107,7 @@ function reduction(){
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-/*la fonction recursice de reduction, le principe c'est de partir de l'etat vers tous les etats qui peut y aller,
+/*la fonction recursive de reduction, le principe c'est de partir de l'etat vers tous les etats qui peut y aller,
 a chaque fois on elimine le chemin que l'on y passe , et on sauvegarde l'etat dans une table (visited), si avant
 la sortie on passe par un element dans redList on fusionne la table visible avec la table redList, redList contient au debut la premiere 
 etat final que l'on y passe*/
@@ -196,13 +167,6 @@ function getEpsilons(){
     return epObj;
 }
 /*--------------------------------------------------------------*/
-function essay(){
-    var list=new Set();
-    t=["S1","","S2"];
-    list.add(t);
-    console.log(list);
-    console.log(list.has(t));
-}
 /*--------------------------------------------------------------*/
 function deleteEpsilons(){
     var epObj=getEpsilons();
@@ -211,21 +175,15 @@ function deleteEpsilons(){
     var etatsFin=getEtatsFin();
     var visited=new Set();
     var t=[],p=[];var ts,ps;
-    console.log("1");
     while (epsArr.length!=0){
-        console.log(ts,"2");
         ts=epsArr[0];
         t=ts.split(",");
-        console.log(ts,"2.2");
         console.log(tranSet.has(ts));
         tranSet.delete(ts);
         epsArr.shift();
         visited.add(ts);
-        console.log("visited",visited);
         if (etatsFin.includes(t[2])){
-            console.log(ts,"3");
             if (!(etatsFin.includes(t[0]))){
-                console.log(ts,"4");
                 etatsFin.push(t[0]);
             }
         }
@@ -234,23 +192,17 @@ function deleteEpsilons(){
         for (var transs of tranSet){
             trans=transs.split(",");
             if (i<tail){
-                console.log(ts,"5");
                 if (trans[0]==t[2]){
-                    console.log(ts,"6");
                     s=t[0].toString();w=trans[1].toString();f=trans[2].toString();
                     p=[s,w,f];
                     ps=p.toString();
                     if (trans[1]!=""){
-                        console.log(ts,"7");
                         if (!(tranSet.has(ps))){
                             tranSet.add(ps);
                         }
                     }
                     else {
-                        console.log(ts,"8");
                         if (!(epsArr.includes(ps)) && !(visited.has(ps))){
-                            console.log(ts,"9");
-                            console.log("traitee");
                             epsArr.push(ps);
                             if (!(tranSet.has(ps))){
                                 tranSet.add(ps);
@@ -268,18 +220,35 @@ function deleteEpsilons(){
 /*--------------------------------------------------------------*/
 /*passage par mot ==> passage par alphabet*/
 function toAlpha(){
-    var redMap=fusion();
+    var epObj=deleteEpsilons();
+    var tranSet=epObj.tranSet,etatsFin=epObj.etatsFin;
+    var epMap=new Map(),key,val,elTab,x;
+    for (var element of tranSet){
+        elTab=element.split(",");
+        key=[elTab[0],elTab[1]].toString();
+        val=(elTab[2]).toString();
+        if(epMap.has(key))
+        {
+            x=epMap.get(key);
+            x.push(val);
+            epMap[key]=x;
+        }
+        else{
+            x=[val];
+            epMap.set(key,x);
+        }
+    }
     var length,start,finish,trans,keyM,y,concat;
     var st=0;
-    for(key of redMap.keys()){
+    for(key of epMap.keys()){
         x=key.split(",");
         word=x[1];
         i=0;
         length=word.length;
         if (length>1){
             start=x[0];
-            finish=redMap.get(key);
-            redMap.delete(key);
+            finish=epMap.get(key);
+            epMap.delete(key);
             while(i<length){
                 keyM=[start,word[i]].toString();
                 if (i!=length-1)
@@ -297,34 +266,52 @@ function toAlpha(){
                 {
                     x.push(val);
                 }
-                if(redMap.has(keyM)){
-                    y=redMap.get(keyM);
+                if(epMap.has(keyM)){
+                    y=epMap.get(keyM);
                     x=x.concat(y);
                 }
-                redMap.set(keyM,x)
+                epMap.set(keyM,x)
                 st++;
                 i++;
             }
         }
     }
+    var alphaMap=new Map();
+    var keyAlpha;
+    var valAlpha;
+    for (key of epMap.keys()){
+        val=epMap.get(key);
+        elTab=key.split(",");
+        keyAlpha=elTab[0];
+        if (alphaMap.has(keyAlpha)){
+            valAlpha=alphaMap.get(keyAlpha);
+            valAlpha.set(key,val);
+            alphaMap[keyAlpha]=valAlpha;
+        }
+        else{
+            var valAlpha=new Map();
+            valAlpha.set(key,val);
+            alphaMap.set(keyAlpha,valAlpha);
+
+        }
+    }
     /*there's a little problem*/
-    console.log("redMap");
-    console.log(redMap);
-    return redMap;
+    console.log("alphaMap");
+    return alphaMap;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-/*remplir la table de transition apres rediction*/
-function updateTransition() {
-    var tableBody = document.getElementById("reduction"),
+/*remplir la table de transition apres reduction*/
+function updateReduction() {
+    var tableBody = document.getElementById("redTransitions"),
         newRow, newCell,x,key;
     var transitions=getTransitions();
     var redList=reduction();
     console.log(redList);
-    // Reset the table
+    // Reset redTransitions table
     tableBody.innerHTML = "";
 
-    // Build the new table
+    // Build redTransitions new table
     var i=0;
     while (i<transitions.length) {
         var first,finish,word;
@@ -346,10 +333,28 @@ function updateTransition() {
         }
         i++;
     }
+    tableBody = document.getElementById("redStates");
+    var etatsFin=getEtatsFin();
+    // Reset redStates table
+    tableBody.innerHTML = "";
+
+    // Build redStates new table
+    var i=0;
+    while (i<etatsFin.length) {
+        fin=etatsFin[i];
+        if (redList.includes(fin)){
+            newRow = document.createElement("tr");
+            tableBody.appendChild(newRow);
+            newCell = document.createElement("td");
+            newCell.textContent = fin;
+            newRow.appendChild(newCell);
+        }
+        i++;
+    }
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-$('#updateTransitions').click(function () {
+$('#updateReduction').click(function () {
     $('#checked').show("fast","swing");
     setTimeout(function() {
         $('#checked').hide("fast","swing");

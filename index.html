@@ -161,8 +161,6 @@
                         <!-- Editable table -->
                           <div class="card-body">
                             <div id="table4" class="table-editable">
-                              <span class="table4-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                               <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                   <tr>
@@ -179,6 +177,8 @@
                                   </tr>
                                 </tbody>
                               </table>
+                              <span class="table4-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                             </div>
                           </div>
                         <!-- Editable table -->
@@ -198,8 +198,6 @@
                         <!-- Editable table -->
                           <div class="card-body">
                             <div id="table5" class="table-editable">
-                              <span class="table5-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                               <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                   <tr>
@@ -220,6 +218,8 @@
                                   </tr>
                                 </tbody>
                               </table>
+                              <span class="table5-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>                           
                             </div>
                           </div>
                         <!-- Editable table -->
@@ -227,7 +227,7 @@
                     </div>
                   </div><br>
                 </div>
-                <div class="right"><button onclick="updateTransition()" id="updateTransitions" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checked" style="display: none;" class="fas fa-check"></i></button></div>
+                <div class="right"><button onclick="updateReduction()" id="updateReduction" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checked" style="display: none;" class="fas fa-check"></i></button></div>
                 <br>
                 
             </div>
@@ -249,6 +249,18 @@
                     <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
                       <div class="card-body">
                         <div>
+                          <strong>Les Etats Finaux</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Final</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="redStates">
+                            </tbody>
+                          </table>
+                        </div> 
+                        <div>
                           <strong>Les Transitions</strong>
                           <table class="table un table-bordered table-responsive-md table-striped text-center">
                             <thead>
@@ -258,7 +270,7 @@
                                 <th class="text-center">l'Etat Après</th>
                               </tr>
                             </thead>
-                            <tbody  id="reduction">
+                            <tbody  id="redTransitions">
                             </tbody>
                           </table>
                         </div>          
