@@ -47,6 +47,19 @@ function getEtatsFin() {
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
+function getEtatsFinR() {
+    var etatsFin = [];
+    var x;
+    $("#redStates tr:has(td)").each(function() {
+
+        var tableData = $(this).find('td');
+        x=$(this).find('td').eq(0).text().toString();
+        etatsFin.push(x);
+        });
+    return etatsFin;
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
 /*test affichage des etats*/
 function eif()
 {
@@ -172,7 +185,9 @@ function deleteEpsilons(){
     var epObj=getEpsilons();
     var epsArr=epObj.epsArr;
     var tranSet=epObj.tranSet;
-    var etatsFin=getEtatsFin();
+    var etatsFin=getEtatsFinR();
+    console.log("etats Fin:")
+    console.log(etatsFin);
     var visited=new Set();
     var t=[],p=[];var ts,ps;
     while (epsArr.length!=0){
@@ -297,7 +312,60 @@ function toAlpha(){
     }
     /*there's a little problem*/
     console.log("alphaMap");
-    return alphaMap;
+    etatsFin.sort();
+    return {alphaMap,etatsFin};
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function determinist(){
+    var alphaObj=toAlpha();
+    var etatsFin=alphaObj.etatsFin;
+    var NouvEtatsFin=[];
+    var alphaMap=alphaObj.alphaMap;
+    var attente=[],visited=[];
+    var courant=getEtatInit();
+    var detMap=new Map();
+    attente.push(courant);
+    while (attente.length > 0){
+        courant=attente.shift();
+        if (!(visited.includes(courant))){
+            visited.push(courant);
+            var tranTab=courant.split(",");
+            var keyDet=courant,valDet=new Map(),keyValDet,valValDet=new Set();
+            for (var elTab of tranTab){
+                var mapCont=new Map();
+                mapCont=alphaMap.get(elTab);
+                for (var elKey of mapCont.keys()){
+                    var keyValDetTab=(elKey.split(","));
+                    keyValDet=keyValDetTab[1];
+                    if (valDet.has(keyValDet)){
+                        valValDet=valDet.get(keyValDet);
+                    }
+                    else {
+                        valValDet=new Set();
+                    }
+                    var valArr=mapCont.get(elKey);
+                    for (var elementArr of valArr){
+                        valValDet.add(elementArr);
+                    }
+                    valDet.set(keyValDet,valValDet);
+                }              
+            }
+            for (keyValDet of valDet.keys()){
+                valValDet=valDet.get(keyValDet);
+                var valValDetTab=[];
+                for (var element of valValDet){
+                    valValDetTab.push(element);
+                }
+                valValDetTab.sort();
+                var valValDetS=valValDetTab.toString();
+                attente.push(valValDetS);
+            }
+            detMap.set(keyDet,valDet);
+        }
+    }
+    return detMap;
+
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
