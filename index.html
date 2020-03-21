@@ -136,7 +136,7 @@
                                     <th class="text-center">l'Etat initial</th>
                                   </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="initMir">
                                   <tr>
                                   <td class="pt-3-half" contenteditable="true">SI</td>
                                   </tr>
@@ -168,7 +168,7 @@
                                     <th class="text-center">Remove</th>
                                   </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="finMir">
                                   <tr>
                                     <td class="pt-3-half" contenteditable="true">SFi</td>
                                     <td>
@@ -207,7 +207,7 @@
                                     <th class="text-center">Remove</th>
                                   </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="transitionsMir">
                                   <tr>
                                     <td class="pt-3-half" contenteditable="true">S-</td>
                                     <td class="pt-3-half" contenteditable="true">aaa</td>
@@ -227,7 +227,8 @@
                     </div>
                   </div><br>
                 </div>
-                <div class="right"><button onclick="updateReduction()" id="updateReduction" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checked" style="display: none;" class="fas fa-check"></i></button></div>
+                <div class="right"><button onclick="miroir()" id="updateReduction" class="btn btn-lg btn-block blue-gradient">Miroir <i id="checked" style="display: none;" class="fas fa-check"></i></button></div><br>
+                <div class="right"><button onclick="updateAll()" id="updateReduction" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checked" style="display: none;" class="fas fa-check"></i></button></div>
                 <br>
                 
             </div>
@@ -281,33 +282,124 @@
                   <div class="card">
                     <div class="card-header">
                       <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
-                        # Non Deterministe => Deterministe:
+                        # e-Fermetures:
                       </a>
                     </div>
                     <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
                       <div class="card-body">
-                        <table class="table un table-bordered table-responsive-md table-striped text-center">
-                          <thead>
-                            <tr>
-                              <th class="text-center">l'Etat Avant</th>
-                              <th class="text-center">l'Alphabet</th>
-                              <th class="text-center">l'Etat Après</th>
-                            </tr>
-                          </thead>
-                          <tbody  id="deterministe">
-                          </tbody>
-                        </table>
+                        <div>
+                          <strong>Les Etats Finaux</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Final</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="eStates">
+                            </tbody>
+                          </table>
+                        </div> 
+                        <div>
+                          <strong>Les Transitions</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Avant</th>
+                                <th class="text-center">le Mot</th>
+                                <th class="text-center">l'Etat Après</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="eTransitions">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div><br>
+
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree2">
+                        # toAlpha:
+                      </a>
+                    </div>
+                    <div id="collapseThree2" class="collapse" data-parent="#accordion2">
+                      <div class="card-body">
+                        <div>
+                          <strong>Les Etats Finaux</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Final</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="alphaStates">
+                            </tbody>
+                          </table>
+                        </div> 
+                        <div>
+                          <strong>Les Transitions</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Avant</th>
+                                <th class="text-center">l'Alphabet</th>
+                                <th class="text-center">l'Etat Après</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="alphaTransitions">
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div><br>
+
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour2">
+                        # Deterministe:
+                      </a>
+                    </div>
+                    <div id="collapseFour2" class="collapse" data-parent="#accordion2">
+                      <div class="card-body">
+                        <div>
+                          <strong>Les Etats Finaux</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Final</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="detStates">
+                            </tbody>
+                          </table>
+                        </div> 
+                        <div>
+                          <strong>Les Transitions</strong>
+                          <table class="table un table-bordered table-responsive-md table-striped text-center">
+                            <thead>
+                              <tr>
+                                <th class="text-center">l'Etat Avant</th>
+                                <th class="text-center">l'Alphabet</th>
+                                <th class="text-center">l'Etat Après</th>
+                              </tr>
+                            </thead>
+                            <tbody  id="detTransitions">
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div><br>
                 
                   <div class="card">
                     <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree2">
+                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive2">
                         Collapsible Group Item #3
                       </a>
                     </div>
-                    <div id="collapseThree2" class="collapse" data-parent="#accordion2">
+                    <div id="collapseFive2" class="collapse" data-parent="#accordion2">
                       <div class="card-body">
                         Lorem ipsum..
                       </div>

@@ -249,14 +249,14 @@ const $BTN5 = $('#export-btn5');
 const $EXPORT5 = $('#export5');
 
 const newTr5 = `
-<tr class="hide">
- <td class="pt-3-half" contenteditable="true">Le Mot</td>
- <td class="pt-3-half" contenteditable="true">L'état Avant</td>
- <td class="pt-3-half" contenteditable="true">L'état Après</td>
- <td>
-   <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
- </td>
-</tr>`;
+    <tr class="hide">
+      <td class="pt-3-half" contenteditable="true">Le Mot</td>
+      <td class="pt-3-half" contenteditable="true">L'état Avant</td>
+      <td class="pt-3-half" contenteditable="true">L'état Après</td>
+      <td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+      </td>
+    </tr>`;
 
 $('.table5-add').on('click', 'i', () => {
 

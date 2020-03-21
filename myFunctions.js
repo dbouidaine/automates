@@ -60,6 +60,27 @@ function getEtatsFinR() {
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
+function getEpsilons(){
+    var epsArr=[];
+    var tranSet=new Set();
+    var transitions=getTransitionsR();
+    var i=0,w,s,f,n,t=[];
+    while (i<transitions.length){
+        w=transitions[i].word.toString();
+        s=transitions[i].start.toString();
+        f=transitions[i].finish.toString();
+        t=[s,w,f].toString();
+        tranSet.add(t);
+        if (w==""){  
+            epsArr.push(t);
+        }
+        i++;
+    }
+    var epObj={epsArr,tranSet};
+    return epObj;
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
 /*test affichage des etats*/
 function eif()
 {
@@ -160,27 +181,6 @@ function reduce(redObj){
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-function getEpsilons(){
-    var epsArr=[];
-    var tranSet=new Set();
-    var transitions=getTransitionsR();
-    var i=0,w,s,f,n,t=[];
-    while (i<transitions.length){
-        w=transitions[i].word.toString();
-        s=transitions[i].start.toString();
-        f=transitions[i].finish.toString();
-        t=[s,w,f].toString();
-        tranSet.add(t);
-        if (w==""){  
-            epsArr.push(t);
-        }
-        i++;
-    }
-    var epObj={epsArr,tranSet};
-    return epObj;
-}
-/*--------------------------------------------------------------*/
-/*--------------------------------------------------------------*/
 function deleteEpsilons(){
     var epObj=getEpsilons();
     var epsArr=epObj.epsArr;
@@ -234,8 +234,7 @@ function deleteEpsilons(){
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
 /*passage par mot ==> passage par alphabet*/
-function toAlpha(){
-    var epObj=deleteEpsilons();
+function toAlpha(epObj){
     var tranSet=epObj.tranSet,etatsFin=epObj.etatsFin;
     var epMap=new Map(),key,val,elTab,x;
     for (var element of tranSet){
@@ -312,13 +311,13 @@ function toAlpha(){
     }
     /*there's a little problem*/
     console.log("alphaMap");
+    console.log({alphaMap,etatsFin});
     etatsFin.sort();
     return {alphaMap,etatsFin};
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-function determinist(){
-    var alphaObj=toAlpha();
+function determinist(alphaObj){
     var etatsFin=alphaObj.etatsFin;
     var NouvEtatsFin=[];
     var alphaMap=alphaObj.alphaMap;
@@ -334,7 +333,9 @@ function determinist(){
             var keyDet=courant,valDet=new Map(),keyValDet,valValDet=new Set();
             for (var elTab of tranTab){
                 var mapCont=new Map();
-                mapCont=alphaMap.get(elTab);
+                if (alphaMap.has(elTab)){
+                    mapCont=alphaMap.get(elTab);
+                }
                 for (var elKey of mapCont.keys()){
                     var keyValDetTab=(elKey.split(","));
                     keyValDet=keyValDetTab[1];
@@ -364,6 +365,8 @@ function determinist(){
             detMap.set(keyDet,valDet);
         }
     }
+    console.log("detMap");
+    console.log(detMap);
     return detMap;
 
 }
@@ -422,6 +425,166 @@ function updateReduction() {
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
+/*remplir la table de transition apres reduction*/
+function updateDeterministe() {
+    var tableBody = document.getElementById("eTransitions"),
+        newRow, newCell,x,key;
+    var epObj=deleteEpsilons(),epFin=epObj.etatsFin,epSet=epObj.tranSet;
+    var alphaObj=toAlpha(epObj),alphaFin=alphaObj.etatsFin,alphaMap=alphaObj.alphaMap;
+    var detMap=determinist(alphaObj);
+
+    // Reset eTransitions table
+    tableBody.innerHTML = "";
+
+    // Build eTransitions new table
+    for (var element of epSet) {
+        var first,finish,word,epTab=element.split(",");
+        first=epTab[0];
+        finish=epTab[2];
+        word=epTab[1];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = first;
+        newRow.appendChild(newCell);
+        newCell = document.createElement("td");
+        newCell.textContent = word;
+        newRow.appendChild(newCell);
+        newCell = document.createElement("td");
+        newCell.textContent = finish;
+        newRow.appendChild(newCell);
+    }
+    tableBody = document.getElementById("eStates");
+    // Reset eStates table
+    tableBody.innerHTML = "";
+
+    // Build eStates new table
+    var i=0;
+    while (i<epFin.length) {
+        fin=epFin[i];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = fin;
+        newRow.appendChild(newCell);
+        i++;
+    }
+    /*--------------------------------------------------------------*/
+    tableBody = document.getElementById("alphaTransitions");
+    // Reset alphaTransitions table
+    tableBody.innerHTML = "";
+
+    // Build alphaTransitions new table
+    for (var keyAlpha of alphaMap.keys()){
+        var first=keyAlpha;
+        var elementAlpha=alphaMap.get(keyAlpha);
+        for (var key of elementAlpha.keys())
+        {
+            var mot=(key.split(","))[1];
+            newRow = document.createElement("tr");
+            tableBody.appendChild(newRow);
+            newCell = document.createElement("td");
+            newCell.textContent = first;
+            newRow.appendChild(newCell);
+            newCell = document.createElement("td");
+            newCell.textContent = mot;
+            newRow.appendChild(newCell);
+            var element = elementAlpha.get(key);
+            var finish=[];
+            for (var value of element){
+                finish.push(" "+value+" ");
+            }
+            newCell = document.createElement("td");
+            newCell.textContent = "[ " + finish.toString() + " ]";
+            newRow.appendChild(newCell);
+
+        }
+    }
+    tableBody = document.getElementById("alphaStates");
+    // Reset alphaStates table
+    tableBody.innerHTML = "";
+
+    // Build alphaStates new table
+    var i=0;
+    while (i<alphaFin.length) {
+        fin=alphaFin[i];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = fin;
+        newRow.appendChild(newCell);
+        i++;
+    }
+    /*--------------------------------------------------------------*/
+    tableBody = document.getElementById("detTransitions");
+    // Reset detTransitions table
+    tableBody.innerHTML = "";
+
+    // Build detTransitions new table
+    var detFin=[];
+    for (var keyDet of detMap.keys()){
+        var firstTab=[];
+        firstTab=keyDet.split(",");
+        var first = [];
+        for (var value of firstTab){
+            first.push(" "+value+" ");
+        }
+        for(var fin of alphaFin){
+            if (first.includes(" " + fin + " ")){
+                if (!(detFin.includes(first))){
+                    detFin.push(first);
+                }
+            }
+        }
+        var elementDet=detMap.get(keyDet);
+        for (var key of elementDet.keys()){
+            var mot = key;
+            var element=elementDet.get(key);
+            var finish=[];
+            for (var value of element){
+                finish.push("    " + value + " ");
+            }
+            finish.sort();
+            for(var fin of alphaFin){
+                if (finish.includes(" " + fin + " ")){
+                    if (!(detFin.includes(finish))){
+                        detFin.push(finish);
+                    }
+                }
+            }
+            newRow = document.createElement("tr");
+            tableBody.appendChild(newRow);
+            newCell = document.createElement("td");
+            newCell.textContent = "{ " + first +" }";
+            newRow.appendChild(newCell);
+            newCell = document.createElement("td");
+            newCell.textContent = mot;
+            newRow.appendChild(newCell);
+            newCell = document.createElement("td");
+            newCell.textContent = "{ " + finish +" }";
+            newRow.appendChild(newCell);
+
+        }
+    }
+    tableBody = document.getElementById("detStates");
+    // Reset detStates table
+    tableBody.innerHTML = "";
+
+    // Build detStates new table
+    var i=0;
+    detFin.sort();
+    while (i<detFin.length) {
+        fin=detFin[i];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = fin;
+        newRow.appendChild(newCell);
+        i++;
+    }
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
 $('#updateReduction').click(function () {
     $('#checked').show("fast","swing");
     setTimeout(function() {
@@ -456,6 +619,92 @@ function updateTransition2() {
         newCell.textContent = val.toString();
         newRow.appendChild(newCell);
     }
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function miroir(){
+    var etatInit=getEtatInit();
+    var etatsFin=getEtatsFin(),etatFin;
+    var transitions=getTransitions();
+    for (var tran of transitions){
+        var passage=tran.start;
+        tran.start=tran.finish;
+        tran.finish=passage;
+    }
+    if (etatsFin.length > 1){
+        for (var fin of etatsFin){
+            var length=transitions.length+1;
+            transitions.push({id:length,start:"Spm",word:"",finish:fin});
+        }
+        etatFin="Spm";
+    }
+    else{
+        etatFin=etatsFin[0];
+    }
+    var passage=etatInit;
+    etatInit=etatFin;
+    etatFin=passage;
+    var tableBody = document.getElementById("transitionsMir");
+    tableBody.innerHTML = "";
+    for (var element of transitions){
+        /*---------------------------*/
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = element.start;
+        newCell.classList.add("pt-3-half");
+        newCell.setAttribute("contenteditable","true");
+        newRow.appendChild(newCell);
+        /*---------------------------*/
+        newCell = document.createElement("td");
+        wordTab=element.word.split("");
+        wordTab.reverse();
+        element.word=wordTab.join("");
+        newCell.textContent = element.word;
+        newCell.classList.add("pt-3-half");
+        newCell.setAttribute("contenteditable","true");
+        newRow.appendChild(newCell);
+        /*---------------------------*/
+        newCell = document.createElement("td");
+        newCell.textContent = element.finish;
+        newCell.classList.add("pt-3-half");
+        newCell.setAttribute("contenteditable","true");
+        newRow.appendChild(newCell);
+        /*---------------------------*/
+        newRow.insertAdjacentHTML('beforeend', `<td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td>`);
+    }
+    /*---------------------------*/
+    tableBody = document.getElementById("finMir");
+    tableBody.innerHTML = "";
+    newRow = document.createElement("tr");
+    tableBody.appendChild(newRow);
+    newCell = document.createElement("td");
+    newCell.textContent = etatFin;
+    newCell.classList.add("pt-3-half");
+    newCell.setAttribute("contenteditable","true");
+    newRow.appendChild(newCell);
+    newRow.insertAdjacentHTML('beforeend', `<td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+    </td>`);
+    /*---------------------------*/
+    tableBody = document.getElementById("initMir");
+    tableBody.innerHTML = "";
+    newRow = document.createElement("tr");
+    tableBody.appendChild(newRow);
+    newCell = document.createElement("td");
+    newCell.textContent = etatInit;
+    newCell.classList.add("pt-3-half");
+    newCell.setAttribute("contenteditable","true");
+    newRow.appendChild(newCell);
+    return {transitions,etatFin,etatInit};
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function updateAll(){
+    updateReduction();
+    updateDeterministe();
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
