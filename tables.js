@@ -328,105 +328,21 @@ $BTN5.on('click', () => {
   $EXPORT5.text(JSON.stringify(data));
 });
 /*-----------------------------------------------*/
- /*-----------------SaveFile------------------------------*/
- $(document).ready(function () {
-    $('#saveFile').click(function (){
-      var html = $('html').clone();
-      var htmlString = html.html();
-      var path=$('#path').val();
-      var blob = new Blob([htmlString], {
-        type: "application/json;utf-8"
-      });
-      saveAs(blob,path + ".html");
-   })
- })
+/*-----------------SaveFile------------------------------*/
+/*$("#saveFile").click(function () {
+  var myTP = $(document).clone();
+  var myTPString = myTP.html();
+  var blob = new Blob([myTPString], {
+    type: "application/json;utf-8"
+  });
+  saveAs(blob);
+ })*/
  /*-------------------------------------------------------------*/
- /*-----------------editableTable2------------------------------*/
-/*const $tableID2 = $('#table2');
-const $BTN2 = $('#export-btn2');
-const $EXPORT2 = $('#export2');
-
-const newTr2 = `
-<tr class="hide">
- <td class="pt-3-half" contenteditable="true">Example</td>
- <td class="pt-3-half" contenteditable="true">Example</td>
- <td class="pt-3-half" contenteditable="true">Example</td>
- <td class="pt-3-half" contenteditable="true">Example</td>
- <td class="pt-3-half" contenteditable="true">Example</td>
- <td class="pt-3-half">
-   <span class="table-up"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-up" aria-hidden="true"></i></a></span>
-   <span class="table-down"><a href="#!" class="indigo-text"><i class="fas fa-long-arrow-alt-down" aria-hidden="true"></i></a></span>
- </td>
- <td>
-   <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
- </td>
-</tr>`;
-
-$('.table2-add').on('click', 'i', () => {
-
-  const $clone = $tableID2.find('tbody tr').last().clone(true).removeClass('hide table-line');
-
-  if ($tableID2.find('tbody tr').length === 0) {
-
-    $('tbody').append(newTr);
-  }
-
-  $tableID2.find('table').append($clone);
-});
-
-$tableID2.on('click', '.table-remove', function () {
-
-  $(this).parents('tr').detach();
-});
-
-$tableID2.on('click', '.table-up', function () {
-
-  const $row = $(this).parents('tr');
-
-  if ($row.index() === 1) {
-    return;
-  }
-
-  $row.prev().before($row.get(0));
-});
-
-$tableID2.on('click', '.table-down', function () {
-
-  const $row = $(this).parents('tr');
-  $row.next().after($row.get(0));
-});
-
-// A few jQuery helpers for exporting only
-jQuery.fn.pop = [].pop;
-jQuery.fn.shift = [].shift;
-
-$BTN2.on('click', () => {
-
-  const $rows = $tableID2.find('tr:not(:hidden)');
-  const headers = [];
-  const data = [];
-
-  // Get the headers (add special header logic here)
-  $($rows.shift()).find('th:not(:empty)').each(function () {
-
-    headers.push($(this).text().toLowerCase());
-  });
-
-  // Turn all existing rows into a loopable array
-  $rows.each(function () {
-    const $td = $(this).find('td');
-    const h = {};
-
-    // Use the headers from earlier to name our hash keys
-    headers.forEach((header, i) => {
-
-      h[header] = $td.eq(i).text();
-    });
-
-    data.push(h);
-  });
-
-  // Output the result
-  $EXPORT2.text(JSON.stringify(data));
-});*/
-/*-----------------------------------------------*/
+ /*-----------------LoadFile------------------------------*/
+/*$("#readFile").click(function (){
+  var path=$('#path').val();
+  jQuery.get(path,function(data){
+    alert(data);
+    $("#myTP").val(data);
+  })
+})*/

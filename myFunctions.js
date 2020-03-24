@@ -957,14 +957,18 @@ function lecture(){
     if ((continu) && (detFin.includes(etat))) {reconnu=true};
     var myButton=document.getElementById("lecture");
     if (reconnu){
-        myButton.classList.replace("btn-light","aqua-gradient");
-        myButton.classList.replace("peach-gradient","aqua-gradient");
-        myButton.innerHTML="Le mot est reconnu par l'automate           etat courant="+etat;
+        setTimeout(function(){
+            myButton.classList.replace("btn-light","aqua-gradient");
+            myButton.classList.replace("peach-gradient","aqua-gradient");
+            myButton.innerHTML="Le mot est reconnu par l'automate | etat courant="+etat;
+        },150)
     }
     else {
-        myButton.classList.replace("btn-light","peach-gradient");
-        myButton.classList.replace("aqua-gradient","peach-gradient");
-        myButton.innerHTML="Le mot n'est pas reconnu par l'automate";
+        setTimeout(function(){
+            myButton.classList.replace("btn-light","peach-gradient");
+            myButton.classList.replace("aqua-gradient","peach-gradient");
+            myButton.innerHTML="Le mot n'est pas reconnu par l'automate | etat courant="+etat;
+        },150)
     }
     return reconnu;
 }

@@ -20,7 +20,7 @@
     <div class="">
     <div class="flex-center flex-column">
       <div class="section-1 col-12">
-        <div class="container mt-3">
+        <div class="container mt-3" id="myTP">
           <h2>TP_THP</h2>
           <br>
           <!-- Nav tabs -->
@@ -32,7 +32,7 @@
               <a class="nav-link" data-toggle="tab" href="#menu1">Résultats</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+              <a class="nav-link" data-toggle="tab" href="#menu2">Reconnaissance</a>
             </li>
           </ul>
         
@@ -41,7 +41,7 @@
             <!--Intriductuin de l'automate-------------------------------------------->
             <div id="home" class="container tab-pane active"><br>
               <h3>Décrire l'automate</h3>
-              <div id="accordion">
+                <div id="accordion">
                 <br>
                 
                   <!--Alphabet-------------------------------------------------------------------->
@@ -230,7 +230,14 @@
                 <div class="right"><button onclick="miroir()" id="updateMir" class="btn btn-lg btn-block blue-gradient">Miroir <i id="checkedMir" style="display: none;" class="fas fa-check"></i></button></div><br>
                 <div class="right"><button onclick="updateAll()" id="updateAll" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checkedAll" style="display: none;" class="fas fa-check"></i></button></div>
                 <br>
-                <input type="text" id="path"><span>.html    </span><button id="saveFile" class="btn btn-light">Save<i id="checked" style="display: none;" class="fas fa-check"></i></button>
+                <!--<div class="d-flex col-12">
+                  <div class="col-6 justify-content-center">
+                    <button id="saveFile" class="btn btn-light">Save Automate</button>
+                  </div>
+                  <div class="col-6 justify-content-center">
+                    <input class="ml-auto" placeholder="Nom de fichier" type="text" id="path"><button id="readFile" class="btn btn-light">Load Automate</button> 
+                  </div>
+                </div>-->
                 <br><br>
             </div>
             <!--/Intriductuin de l'automate-------------------------------------------->
@@ -476,8 +483,7 @@
             </div>
             <!--/Les Résultats-------------------------------------------->
             <div id="menu2" class="container tab-pane fade"><br>
-              <h3>Lecture</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+              <h3>Reconnaissance d'un mot: </h3>
               <div class="md-form">
                 <input type="text" id="aLire" oninput="lecture()" class="form-control">
                 <label for="aLire">Entrer le mot a lire ... </label>
@@ -505,7 +511,7 @@
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript" src="tables.js"></script>
   <script type="text/javascript" src="myFunctions.js"></script>
-  <script type="text/javascript" src="js/FileSaver.js"></script>
+  <script type="text/javascript" src="js/filesaver.js"></script>
 
 </body>
 </html>
