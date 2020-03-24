@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,14 +6,15 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="css/mdb.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="myStyle.css">
-</head>
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style></head>
 <body>
     <div class="">
     <div class="flex-center flex-column">
@@ -25,13 +24,13 @@
           <br>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs">
-            <li class="nav-item">
+            <li class="nav-item waves-effect waves-light">
               <a class="nav-link active" data-toggle="tab" href="#home">Introduire</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item waves-effect waves-light">
               <a class="nav-link" data-toggle="tab" href="#menu1">Résultats</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item waves-effect waves-light">
               <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
             </li>
           </ul>
@@ -40,18 +39,18 @@
           <div class="tab-content">
             <!--Intriductuin de l'automate-------------------------------------------->
             <div id="home" class="container tab-pane active"><br>
-              <h3>Décrire l'automate</h3>
+              <h3>Décrit l'automate</h3>
               <div id="accordion">
                 <br>
                 
                   <!--Alphabet-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false">
                         #1 Introduire l'ensemble d'alphabets
                       </a>
                     </div>
-                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div id="collapseOne" class="collapse" data-parent="#accordion" style="">
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -65,15 +64,19 @@
                                 </thead>
                                 <tbody>
                                   <tr>
-                                    <td class="pt-3-half" contenteditable="true">a</td>
+                                    <td class="pt-3-half" contenteditable="true">0</td>
                                     <td>
                                       <span class="table-remove" id="remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
                                     </td>
                                   </tr>
-                                </tbody>
+                                <tr>
+                                    <td class="pt-3-half" contenteditable="true">1</td>
+                                    <td>
+                                      <span class="table-remove" id="remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+                                    </td>
+                                  </tr></tbody>
                               </table>
-                              <span class="table1-add un float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                              <span class="table1-add un float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                             </div>
                           </div>
                         <!-- Editable table -->
@@ -93,8 +96,7 @@
                         <!-- Editable table -->
                           <div class="card-body">
                             <div id="table2" class="table-editable">
-                              <span class="table2-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                              <span class="table2-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                               <table class="table table-bordered table-responsive-md table-striped text-center">
                                 <thead>
                                   <tr>
@@ -121,11 +123,11 @@
                   <!--L'état initial -------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseThree">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false">
                         #3 Désigner l'état initial
                       </a>
                     </div>
-                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                    <div id="collapseThree" class="collapse" data-parent="#accordion" style="">
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -136,11 +138,7 @@
                                     <th class="text-center">l'Etat initial</th>
                                   </tr>
                                 </thead>
-                                <tbody id="initMir">
-                                  <tr>
-                                  <td class="pt-3-half" contenteditable="true">SI</td>
-                                  </tr>
-                                </tbody>
+                                <tbody id="initMir"><tr><td class="pt-3-half" contenteditable="true">S0</td></tr></tbody>
                               </table>
                             </div>
                           </div>
@@ -152,11 +150,11 @@
                   <!--Les Etats finaux-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseFour">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseFour" aria-expanded="false">
                         #4 Désigner l'ensemble d'états finaux
                       </a>
                     </div>
-                    <div id="collapseFour" class="collapse" data-parent="#accordion">
+                    <div id="collapseFour" class="collapse" data-parent="#accordion" style="">
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -168,17 +166,11 @@
                                     <th class="text-center">Remove</th>
                                   </tr>
                                 </thead>
-                                <tbody id="finMir">
-                                  <tr>
-                                    <td class="pt-3-half" contenteditable="true">SFi</td>
-                                    <td>
-                                      <span class="table-remove" id="remove4"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-                                    </td>
-                                  </tr>
-                                </tbody>
+                                <tbody id="finMir"><tr><td class="pt-3-half" contenteditable="true">S2</td><td>
+    <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+    </td></tr></tbody>
                               </table>
-                              <span class="table4-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                              <span class="table4-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
                             </div>
                           </div>
                         <!-- Editable table -->
@@ -189,11 +181,11 @@
                   <!--Les Transitions-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseFive">
+                      <a class="card-link" data-toggle="collapse" href="#collapseFive" aria-expanded="true">
                         #5 Définir les transitions
                       </a>
                     </div>
-                    <div id="collapseFive" class="collapse" data-parent="#accordion"> 
+                    <div id="collapseFive" class="collapse show" data-parent="#accordion" style=""> 
                       <div class="card-body">
                         <!-- Editable table -->
                           <div class="card-body">
@@ -207,19 +199,19 @@
                                     <th class="text-center">Remove</th>
                                   </tr>
                                 </thead>
-                                <tbody id="transitionsMir">
-                                  <tr>
-                                    <td class="pt-3-half" contenteditable="true">S-</td>
-                                    <td class="pt-3-half" contenteditable="true">aaa</td>
-                                    <td class="pt-3-half" contenteditable="true">S+</td>
-                                    <td>
-                                      <span class="table-remove" id="remove5"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
-                                    </td>
-                                  </tr>
-                                </tbody>
+                                <tbody id="transitionsMir"><tr><td class="pt-3-half" contenteditable="true">S0</td><td class="pt-3-half" contenteditable="true">01</td><td class="pt-3-half" contenteditable="true">S0</td><td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td></tr><tr><td class="pt-3-half" contenteditable="true">S0</td><td class="pt-3-half" contenteditable="true">0</td><td class="pt-3-half" contenteditable="true">S1</td><td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td></tr><tr><td class="pt-3-half" contenteditable="true">S1</td><td class="pt-3-half" contenteditable="true">00</td><td class="pt-3-half" contenteditable="true">S2</td><td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td></tr><tr><td class="pt-3-half" contenteditable="true">S1</td><td class="pt-3-half" contenteditable="true"></td><td class="pt-3-half" contenteditable="true">S2</td><td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td></tr><tr><td class="pt-3-half" contenteditable="true">S2</td><td class="pt-3-half" contenteditable="true">1</td><td class="pt-3-half" contenteditable="true">S1</td><td>
+        <span class="table-remove"><button type="button" class="btn btn-danger btn-rounded btn-sm my-0 waves-effect waves-light">Remove</button></span>
+        </td></tr></tbody>
                               </table>
-                              <span class="table5-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
-                                    class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>                           
+                              <span class="table5-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>                           
                             </div>
                           </div>
                         <!-- Editable table -->
@@ -227,10 +219,10 @@
                     </div>
                   </div><br>
                 </div>
-                <div class="right"><button onclick="miroir()" id="updateMir" class="btn btn-lg btn-block blue-gradient">Miroir <i id="checkedMir" style="display: none;" class="fas fa-check"></i></button></div><br>
-                <div class="right"><button onclick="updateAll()" id="updateAll" class="btn btn-lg btn-block aqua-gradient">Mettre A Jour <i id="checkedAll" style="display: none;" class="fas fa-check"></i></button></div>
+                <div class="right"><button onclick="miroir()" id="updateMir" class="btn btn-lg btn-block blue-gradient waves-effect waves-light">Miroir <i id="checkedMir" style="display: none;" class="fas fa-check"></i></button></div><br>
+                <div class="right"><button onclick="updateAll()" id="updateAll" class="btn btn-lg btn-block aqua-gradient waves-effect waves-light">Mettre A Jour <i id="checkedAll" style="display: none;" class="fas fa-check"></i></button></div>
                 <br>
-                <input type="text" id="path"><span>.html    </span><button id="saveFile" class="btn btn-light">Save<i id="checked" style="display: none;" class="fas fa-check"></i></button>
+                <input type="text" id="path"><span>.html    </span><button id="saveFile" class="btn btn-light waves-effect waves-light">Save<i id="checked" style="display: none;" class="fas fa-check"></i><div class="waves-ripple" data-hold="1585001950809" data-x="27.600006103515625" data-y="9.20001220703125" data-scale="scale(2.9699999999999998)" data-translate="translate(0,0)" style="top:9.20001220703125px;left:27.600006103515625px;-webkit-transform:scale(2.9699999999999998) translate(0,0);-moz-transform:scale(2.9699999999999998) translate(0,0);-ms-transform:scale(2.9699999999999998) translate(0,0);-o-transform:scale(2.9699999999999998) translate(0,0);transform:scale(2.9699999999999998) translate(0,0);opacity:1;-webkit-transition-duration:750ms;-moz-transition-duration:750ms;-o-transition-duration:750ms;transition-duration:750ms;"></div></button>
                 <br><br>
             </div>
             <!--/Intriductuin de l'automate-------------------------------------------->
@@ -245,11 +237,11 @@
                   <!--Reduction-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseOne2" aria-expanded="false">
                         # Réduction
                       </a>
                     </div>
-                    <div id="collapseOne2" class="collapse show" data-parent="#accordion2">
+                    <div id="collapseOne2" class="collapse" data-parent="#accordion2" style="">
                       <div class="card-body">
                         <div>
                           <strong>Les Etats Finaux</strong>
@@ -259,8 +251,7 @@
                                 <th class="text-center">l'Etat Final</th>
                               </tr>
                             </thead>
-                            <tbody  id="redStates">
-                            </tbody>
+                            <tbody id="redStates"><tr><td>S2</td></tr></tbody>
                           </table>
                         </div> 
                         <div>
@@ -273,8 +264,7 @@
                                 <th class="text-center">l'Etat Après</th>
                               </tr>
                             </thead>
-                            <tbody  id="redTransitions">
-                            </tbody>
+                            <tbody id="redTransitions"><tr><td>S0</td><td>01</td><td>S0</td></tr><tr><td>S0</td><td>0</td><td>S1</td></tr><tr><td>S1</td><td>00</td><td>S2</td></tr><tr><td>S1</td><td></td><td>S2</td></tr><tr><td>S2</td><td>1</td><td>S1</td></tr></tbody>
                           </table>
                         </div>          
                       </div>
@@ -284,11 +274,11 @@
                   <!--e-Fermetures-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo2">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseTwo2" aria-expanded="false">
                         # e-Fermetures:
                       </a>
                     </div>
-                    <div id="collapseTwo2" class="collapse" data-parent="#accordion2">
+                    <div id="collapseTwo2" class="collapse" data-parent="#accordion2" style="">
                       <div class="card-body">
                         <div>
                           <strong>Les Etats Finaux</strong>
@@ -298,8 +288,7 @@
                                 <th class="text-center">l'Etat Final</th>
                               </tr>
                             </thead>
-                            <tbody  id="eStates">
-                            </tbody>
+                            <tbody id="eStates"><tr><td>S1</td></tr><tr><td>S2</td></tr></tbody>
                           </table>
                         </div> 
                         <div>
@@ -312,8 +301,7 @@
                                 <th class="text-center">l'Etat Après</th>
                               </tr>
                             </thead>
-                            <tbody  id="eTransitions">
-                            </tbody>
+                            <tbody id="eTransitions"><tr><td>S0</td><td>01</td><td>S0</td></tr><tr><td>S0</td><td>0</td><td>S1</td></tr><tr><td>S1</td><td>00</td><td>S2</td></tr><tr><td>S2</td><td>1</td><td>S1</td></tr><tr><td>S1</td><td>1</td><td>S1</td></tr></tbody>
                           </table>
                         </div>
                       </div>
@@ -323,11 +311,11 @@
                   <!--toAlpha-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree2">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseThree2" aria-expanded="false">
                         # toAlpha:
                       </a>
                     </div>
-                    <div id="collapseThree2" class="collapse" data-parent="#accordion2">
+                    <div id="collapseThree2" class="collapse" data-parent="#accordion2" style="">
                       <div class="card-body">
                         <div>
                           <strong>Les Etats Finaux</strong>
@@ -337,20 +325,16 @@
                                 <th class="text-center">l'Etat Final</th>
                               </tr>
                             </thead>
-                            <tbody  id="alphaStates">
-                            </tbody>
+                            <tbody id="alphaStates"><tr><td>[S1]</td></tr><tr><td>[S2]</td></tr></tbody>
                           </table>
                         </div> 
                         <div>
                           <strong>Les Transitions</strong>
                           <table class="table un table-bordered table-responsive-md table-striped text-center">
                             <thead>
-                              <tr id="alphaHeader">
-                                <th class="text-center">l'Etat Avant</th>
-                              </tr>
+                              <tr id="alphaHeader"><th>L'Etat Avant</th><th>0</th><th>1</th></tr>
                             </thead>
-                            <tbody  id="alphaTransitions">
-                            </tbody>
+                            <tbody id="alphaTransitions"><tr><td>S0</td><td>[  T0 , S1  ]</td><td>/</td></tr><tr><td>S2</td><td>/</td><td>[  S1  ]</td></tr><tr><td>S1</td><td>[  T2  ]</td><td>[  S1  ]</td></tr><tr><td>T0</td><td>/</td><td>[  S0  ]</td></tr><tr><td>T2</td><td>[  S2  ]</td><td>/</td></tr></tbody>
                           </table>
                         </div>
                       </div>
@@ -360,11 +344,11 @@
                   <!--Deterministe-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour2">
+                      <a class="card-link" data-toggle="collapse" href="#collapseFour2" aria-expanded="true">
                         # Deterministe:
                       </a>
                     </div>
-                    <div id="collapseFour2" class="collapse" data-parent="#accordion2">
+                    <div id="collapseFour2" class="collapse show" data-parent="#accordion2" style="">
                       <div class="card-body">
                         <div>
                           <strong>Les Etats Finaux</strong>
@@ -374,20 +358,16 @@
                                 <th class="text-center">l'Etat Final</th>
                               </tr>
                             </thead>
-                            <tbody  id="detStates">
-                            </tbody>
+                            <tbody id="detStates"><tr><td>{ S0 , S1 }</td></tr><tr><td>{ S1 }</td></tr><tr><td>{ S1 , T0 }</td></tr><tr><td>{ S1 , T0 , T2 }</td></tr><tr><td>{ S2 }</td></tr><tr><td>{ S2 , T2 }</td></tr></tbody>
                           </table>
                         </div> 
                         <div>
                           <strong>Les Transitions</strong>
                           <table class="table un table-bordered table-responsive-md table-striped text-center">
                             <thead>
-                              <tr id="detHeader">
-                                <th class="text-center">l'Etat Avant</th>
-                              </tr>
+                              <tr id="detHeader"><th>L'Etat Avant</th><th>0</th><th>1</th></tr>
                             </thead>
-                            <tbody  id="detTransitions">
-                            </tbody>
+                            <tbody id="detTransitions"><tr><td>{  S0  }</td><td>{     S1 ,    T0  }</td><td>/</td></tr><tr><td>{  S1 , T0  }</td><td>{     T2  }</td><td>{     S0 ,    S1  }</td></tr><tr><td>{  S0 , S1  }</td><td>{     S1 ,    T0 ,    T2  }</td><td>{     S1  }</td></tr><tr><td>{  T2  }</td><td>{     S2  }</td><td>/</td></tr><tr><td>{  S1 , T0 , T2  }</td><td>{     S2 ,    T2  }</td><td>{     S0 ,    S1  }</td></tr><tr><td>{  S1  }</td><td>{     T2  }</td><td>{     S1  }</td></tr><tr><td>{  S2  }</td><td>/</td><td>{     S1  }</td></tr><tr><td>{  S2 , T2  }</td><td>{     S2  }</td><td>{     S1  }</td></tr></tbody>
                           </table>
                         </div>
                       </div>
@@ -397,11 +377,11 @@
                   <!--Complet-------------------------------------------------------------------->
                   <div class="card">
                     <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive2">
+                      <a class="card-link collapsed" data-toggle="collapse" href="#collapseFive2" aria-expanded="false">
                         # Complet:
                       </a>
                     </div>
-                    <div id="collapseFive2" class="collapse" data-parent="#accordion2">
+                    <div id="collapseFive2" class="collapse" data-parent="#accordion2" style="">
                       <div class="card-body">
                         <div>
                           <strong>Les Etats Finaux</strong>
@@ -411,20 +391,16 @@
                                 <th class="text-center">l'Etat Final</th>
                               </tr>
                             </thead>
-                            <tbody  id="comStates">
-                            </tbody>
+                            <tbody id="comStates"><tr><td>{ S0 , S1 }</td></tr><tr><td>{ S1 }</td></tr><tr><td>{ S1 , T0 }</td></tr><tr><td>{ S1 , T0 , T2 }</td></tr><tr><td>{ S2 }</td></tr><tr><td>{ S2 , T2 }</td></tr></tbody>
                           </table>
                         </div> 
                         <div>
                           <strong>Les Transitions</strong>
                           <table class="table un table-bordered table-responsive-md table-striped text-center">
                             <thead>
-                              <tr id="comHeader">
-                                <th class="text-center">l'Etat Avant</th>
-                              </tr>
+                              <tr id="comHeader"><th>L'Etat Avant</th><th>0</th><th>1</th></tr>
                             </thead>
-                            <tbody  id="comTransitions">
-                            </tbody>
+                            <tbody id="comTransitions"><tr><td>{  S0  }</td><td>{     S1 ,    T0  }</td><td>{     Spc  }</td></tr><tr><td>{  S1 , T0  }</td><td>{     T2  }</td><td>{     S0 ,    S1  }</td></tr><tr><td>{  S0 , S1  }</td><td>{     S1 ,    T0 ,    T2  }</td><td>{     S1  }</td></tr><tr><td>{  T2  }</td><td>{     S2  }</td><td>{     Spc  }</td></tr><tr><td>{  S1 , T0 , T2  }</td><td>{     S2 ,    T2  }</td><td>{     S0 ,    S1  }</td></tr><tr><td>{  S1  }</td><td>{     T2  }</td><td>{     S1  }</td></tr><tr><td>{  S2  }</td><td>{     Spc  }</td><td>{     S1  }</td></tr><tr><td>{  S2 , T2  }</td><td>{     S2  }</td><td>{     S1  }</td></tr></tbody>
                           </table>
                         </div>
                       </div>
@@ -432,41 +408,7 @@
                   </div><br>
                   <!--/Complet-------------------------------------------------------------------->
                   <!--Complement-------------------------------------------------------------------->
-                  <div class="card">
-                    <div class="card-header">
-                      <a class="collapsed card-link" data-toggle="collapse" href="#collapseSix2">
-                        # Complement:
-                      </a>
-                    </div>
-                    <div id="collapseSix2" class="collapse" data-parent="#accordion2">
-                      <div class="card-body">
-                        <div>
-                          <strong>Les Etats Finaux</strong>
-                          <table class="table un table-bordered table-responsive-md table-striped text-center">
-                            <thead>
-                              <tr>
-                                <th class="text-center">l'Etat Final</th>
-                              </tr>
-                            </thead>
-                            <tbody  id="compStates">
-                            </tbody>
-                          </table>
-                        </div> 
-                        <div>
-                          <strong>Les Transitions</strong>
-                          <table class="table un table-bordered table-responsive-md table-striped text-center">
-                            <thead>
-                              <tr id="compHeader">
-                                <th class="text-center">l'Etat Avant</th>
-                              </tr>
-                            </thead>
-                            <tbody  id="compTransitions">
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div><br>
+
 
                   <!--/Complement-------------------------------------------------------------------->
                 </div>
@@ -476,13 +418,8 @@
             </div>
             <!--/Les Résultats-------------------------------------------->
             <div id="menu2" class="container tab-pane fade"><br>
-              <h3>Lecture</h3>
+              <h3>Menu 2</h3>
               <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-              <div class="md-form">
-                <input type="text" id="aLire" class="form-control">
-                <label for="aLire">Entrer le mot a lire ... </label>
-                <button onclick="lecture()" class="btn btn-light btn-block" id="lecture">Lire</button>
-              </div>
             </div>
           </div>
         </div>
@@ -507,5 +444,6 @@
   <script type="text/javascript" src="myFunctions.js"></script>
   <script type="text/javascript" src="js/FileSaver.js"></script>
 
-</body>
-</html>
+
+
+<div class="hiddendiv common"></div></body>

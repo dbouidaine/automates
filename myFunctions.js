@@ -1,3 +1,4 @@
+var detMapGlobal,detFinG;
 /*--------------------------------------------------------------*/
 /*Les Transitions introduit par l'utilisateur*/
 function getTransitions(){
@@ -44,6 +45,19 @@ function getEtatsFin() {
         etatsFin.push(x);
         });
     return etatsFin;
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function getAlphabets() {
+    var alphabets = [];
+    var x;
+    $("#table tr:has(td)").each(function() {
+
+        var tableData = $(this).find('td');
+        x=$(this).find('td').eq(0).text().toString();
+        alphabets.push(x);
+        });
+    return alphabets;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -147,8 +161,6 @@ la sortie on passe par un element dans redList on fusionne la table visible avec
 etat final que l'on y passe*/
 function reduce(redObj){
     var etat=redObj.etat;
-    console.log("Entree");
-    console.log(etat);
     redObj.visited.push(etat);
     if (redObj.redMap.has(etat)){
         var etatsFis=[];
@@ -163,7 +175,6 @@ function reduce(redObj){
                     }
                     i++;
                 }
-                console.log(redObj);
             }
             redObj.etat=etatFis;
             reduce(redObj);
@@ -175,9 +186,6 @@ function reduce(redObj){
         }
     }
     redObj.visited.pop();
-    console.log(redObj);
-    console.log(etat);
-    console.log("Sortie");
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -186,14 +194,11 @@ function deleteEpsilons(){
     var epsArr=epObj.epsArr;
     var tranSet=epObj.tranSet;
     var etatsFin=getEtatsFinR();
-    console.log("etats Fin:")
-    console.log(etatsFin);
     var visited=new Set();
     var t=[],p=[];var ts,ps;
     while (epsArr.length!=0){
         ts=epsArr[0];
         t=ts.split(",");
-        console.log(tranSet.has(ts));
         tranSet.delete(ts);
         epsArr.shift();
         visited.add(ts);
@@ -229,6 +234,8 @@ function deleteEpsilons(){
             i++;
         }
     }
+    console.log("e-fermeture");
+    console.log({etatsFin,tranSet});
     return {etatsFin,tranSet};
 }
 /*--------------------------------------------------------------*/
@@ -428,11 +435,12 @@ function updateReduction() {
 /*remplir la table de transition apres reduction*/
 function updateDeterministe() {
     var tableBody = document.getElementById("eTransitions"),
-        newRow, newCell,x,key;
+        newRow, newCell,newHeader,x,key,tableHeader;
     var epObj=deleteEpsilons(),epFin=epObj.etatsFin,epSet=epObj.tranSet;
     var alphaObj=toAlpha(epObj),alphaFin=alphaObj.etatsFin,alphaMap=alphaObj.alphaMap;
     var detMap=determinist(alphaObj);
-
+    detMapGlobal=detMap;
+    var comMap=new Map(detMap);
     // Reset eTransitions table
     tableBody.innerHTML = "";
 
@@ -470,34 +478,48 @@ function updateDeterministe() {
         i++;
     }
     /*--------------------------------------------------------------*/
+    var alphabets=[];
+    alphabets=getAlphabets();
+    alphabets.sort();
     tableBody = document.getElementById("alphaTransitions");
+    tableHeader = document.getElementById("alphaHeader");
     // Reset alphaTransitions table
     tableBody.innerHTML = "";
-
+    tableHeader.innerHTML = "";
+    newHeader = document.createElement("th");
+    newHeader.textContent = "L'Etat Avant";
+    tableHeader.appendChild(newHeader);
+    for(var alphabet of alphabets){
+        newHeader = document.createElement("th");
+        newHeader.textContent = alphabet;
+        tableHeader.appendChild(newHeader);
+    }
     // Build alphaTransitions new table
     for (var keyAlpha of alphaMap.keys()){
         var first=keyAlpha;
         var elementAlpha=alphaMap.get(keyAlpha);
-        for (var key of elementAlpha.keys())
-        {
-            var mot=(key.split(","))[1];
-            newRow = document.createElement("tr");
-            tableBody.appendChild(newRow);
-            newCell = document.createElement("td");
-            newCell.textContent = first;
-            newRow.appendChild(newCell);
-            newCell = document.createElement("td");
-            newCell.textContent = mot;
-            newRow.appendChild(newCell);
-            var element = elementAlpha.get(key);
-            var finish=[];
-            for (var value of element){
-                finish.push(" "+value+" ");
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = first;
+        newRow.appendChild(newCell);
+        for (var alphabet of alphabets){
+            var key=[first,alphabet].toString();
+            if (elementAlpha.has(key)){
+                var element = elementAlpha.get(key);
+                var finish=[];
+                for (var value of element){
+                    finish.push(" "+value+" ");
+                }
+                newCell = document.createElement("td");
+                newCell.textContent = "[ " + finish.toString() + " ]";
+                newRow.appendChild(newCell);
             }
-            newCell = document.createElement("td");
-            newCell.textContent = "[ " + finish.toString() + " ]";
-            newRow.appendChild(newCell);
-
+            else{
+                newCell = document.createElement("td");
+                newCell.textContent = "/";
+                newRow.appendChild(newCell);
+            }
         }
     }
     tableBody = document.getElementById("alphaStates");
@@ -511,15 +533,24 @@ function updateDeterministe() {
         newRow = document.createElement("tr");
         tableBody.appendChild(newRow);
         newCell = document.createElement("td");
-        newCell.textContent = fin;
+        newCell.textContent = "["+fin+"]";
         newRow.appendChild(newCell);
         i++;
     }
     /*--------------------------------------------------------------*/
     tableBody = document.getElementById("detTransitions");
+    tableHeader = document.getElementById("detHeader");
     // Reset detTransitions table
     tableBody.innerHTML = "";
-
+    tableHeader.innerHTML = "";
+    newHeader = document.createElement("th");
+    newHeader.textContent = "L'Etat Avant";
+    tableHeader.appendChild(newHeader);
+    for(var alphabet of alphabets){
+        newHeader = document.createElement("th");
+        newHeader.textContent = alphabet;
+        tableHeader.appendChild(newHeader);
+    }
     // Build detTransitions new table
     var detFin=[];
     for (var keyDet of detMap.keys()){
@@ -536,36 +567,44 @@ function updateDeterministe() {
                 }
             }
         }
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = "{ " + first +" }";
+        newRow.appendChild(newCell);
         var elementDet=detMap.get(keyDet);
-        for (var key of elementDet.keys()){
-            var mot = key;
-            var element=elementDet.get(key);
-            var finish=[];
-            for (var value of element){
-                finish.push("    " + value + " ");
-            }
-            finish.sort();
-            for(var fin of alphaFin){
-                if (finish.includes(" " + fin + " ")){
-                    if (!(detFin.includes(finish))){
-                        detFin.push(finish);
-                    }
+        for (var alphabet of alphabets){
+            if (elementDet.has(alphabet)){
+                var element=elementDet.get(alphabet);
+                var finish=[];
+                for (var value of element){
+                    finish.push("    " + value + " ");
                 }
+                finish.sort();
+                for(var fin of alphaFin){
+                    if (finish.includes(" " + fin + " ")){
+                        if (!(detFin.includes(finish))){
+                            detFin.push(finish);
+                        }
+                    }
+                } 
+                newCell = document.createElement("td");
+                newCell.textContent = "{ " + finish +" }";
+                newRow.appendChild(newCell);
             }
-            newRow = document.createElement("tr");
-            tableBody.appendChild(newRow);
-            newCell = document.createElement("td");
-            newCell.textContent = "{ " + first +" }";
-            newRow.appendChild(newCell);
-            newCell = document.createElement("td");
-            newCell.textContent = mot;
-            newRow.appendChild(newCell);
-            newCell = document.createElement("td");
-            newCell.textContent = "{ " + finish +" }";
-            newRow.appendChild(newCell);
-
+            else{
+                var key=alphabet;
+                var value=new Set();
+                value.add("Spc");
+                elementDet.set(key,value);
+                newCell = document.createElement("td");
+                newCell.textContent = "/";
+                newRow.appendChild(newCell);
+            }
         }
     }
+    console.log("comMap");
+    console.log(comMap);
     tableBody = document.getElementById("detStates");
     // Reset detStates table
     tableBody.innerHTML = "";
@@ -573,24 +612,202 @@ function updateDeterministe() {
     // Build detStates new table
     var i=0;
     detFin.sort();
+    detFinG=[...detFin];
     while (i<detFin.length) {
         fin=detFin[i];
         newRow = document.createElement("tr");
         tableBody.appendChild(newRow);
         newCell = document.createElement("td");
-        newCell.textContent = fin;
+        newCell.textContent = "{"+fin+"}";
+        newRow.appendChild(newCell);
+        i++;
+    }
+    /*--------------------------------------------------------------*/
+    tableBody = document.getElementById("comTransitions");
+    tableHeader = document.getElementById("comHeader");
+    // Reset comTransitions table
+    tableBody.innerHTML = "";
+    tableHeader.innerHTML = "";
+    newHeader = document.createElement("th");
+    newHeader.textContent = "L'Etat Avant";
+    tableHeader.appendChild(newHeader);
+    for(var alphabet of alphabets){
+        newHeader = document.createElement("th");
+        newHeader.textContent = alphabet;
+        tableHeader.appendChild(newHeader);
+    }
+    // Build comTransitions new table
+    var detFin=[];
+    for (var keyCom of comMap.keys()){
+        var firstTab=[];
+        firstTab=keyCom.split(",");
+        var first = [];
+        for (var value of firstTab){
+            first.push(" "+value+" ");
+        }
+        for(var fin of alphaFin){
+            if (first.includes(" " + fin + " ")){
+                if (!(detFin.includes(first))){
+                    detFin.push(first);
+                }
+            }
+        }
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = "{ " + first +" }";
+        newRow.appendChild(newCell);
+        var elementCom=comMap.get(keyCom);
+        for (var alphabet of alphabets){
+            if (elementCom.has(alphabet)){
+                var element=elementCom.get(alphabet);
+                var finish=[];
+                for (var value of element){
+                    finish.push("    " + value + " ");
+                }
+                finish.sort();
+                for(var fin of alphaFin){
+                    if (finish.includes(" " + fin + " ")){
+                        if (!(detFin.includes(finish))){
+                            detFin.push(finish);
+                        }
+                    }
+                } 
+                newCell = document.createElement("td");
+                newCell.textContent = "{ " + finish +" }";
+                newRow.appendChild(newCell);
+            }
+        }
+    }
+    tableBody = document.getElementById("comStates");
+    // Reset comStates table
+    tableBody.innerHTML = "";
+
+    // Build comStates new table
+    var i=0;
+    detFin.sort();
+    while (i<detFin.length) {
+        fin=detFin[i];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = "{"+fin+"}";
+        newRow.appendChild(newCell);
+        i++;
+    }
+    /*--------------------------------------------------------------*/
+    tableBody = document.getElementById("compTransitions");
+    tableHeader = document.getElementById("compHeader");
+    // Reset compTransitions table
+    tableBody.innerHTML = "";
+    tableHeader.innerHTML = "";
+    newHeader = document.createElement("th");
+    newHeader.textContent = "L'Etat Avant";
+    tableHeader.appendChild(newHeader);
+    for(var alphabet of alphabets){
+        newHeader = document.createElement("th");
+        newHeader.textContent = alphabet;
+        tableHeader.appendChild(newHeader);
+    }
+    // Build compTransitions new table
+    var detFin=[];
+    for (var keyCom of comMap.keys()){
+        var firstTab=[];
+        firstTab=keyCom.split(",");
+        var first = [];
+        for (var value of firstTab){
+            first.push(" "+value+" ");
+        }
+        for(var fin of alphaFin){
+            if (first.includes(" " + fin + " ")){
+                if (!(detFin.includes(first))){
+                    detFin.push(first);
+                }
+            }
+        }
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = "{ " + first +" }";
+        newRow.appendChild(newCell);
+        var elementCom=comMap.get(keyCom);
+        for (var alphabet of alphabets){
+            if (elementCom.has(alphabet)){
+                var element=elementCom.get(alphabet);
+                var finish=[];
+                for (var value of element){
+                    finish.push("    " + value + " ");
+                }
+                finish.sort();
+                for(var fin of alphaFin){
+                    if (finish.includes(" " + fin + " ")){
+                        if (!(detFin.includes(finish))){
+                            detFin.push(finish);
+                        }
+                    }
+                } 
+                newCell = document.createElement("td");
+                newCell.textContent = "{ " + finish +" }";
+                newRow.appendChild(newCell);
+            }
+        }
+    }
+    tableBody = document.getElementById("compStates");
+    // Reset compStates table
+    tableBody.innerHTML = "";
+
+    // Build compStates new table
+    var i=0;
+    detFin.sort();
+    var comFin=[];
+    for (var value of detFin){
+        comFin.push(value.toString());
+    }
+    console.log("comFin");
+    console.log(comFin);
+    compFin=[];
+    for (var key of comMap.keys()){
+        var keyElements=key.split(",");
+        var i=0;
+        while (i<keyElements.length){
+            var x=keyElements.shift();
+            x=" "+x+" ";
+            keyElements.push(x);
+            i++;
+        }
+        key=keyElements.toString();
+        if (!(comFin.includes(key))){
+            var element = key.split(",");
+            compFin.push(element);
+        }
+    }
+    console.log("compFin");
+    console.log(compFin);
+    var i=0;
+    while (i<compFin.length) {
+        fin=compFin[i];
+        newRow = document.createElement("tr");
+        tableBody.appendChild(newRow);
+        newCell = document.createElement("td");
+        newCell.textContent = "{"+fin+"}";
         newRow.appendChild(newCell);
         i++;
     }
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-$('#updateReduction').click(function () {
-    $('#checked').show("fast","swing");
+$('#updateMir').click(function () {
+    $('#checkedMir').show("fast","swing");
     setTimeout(function() {
-        $('#checked').hide("fast","swing");
+        $('#checkedMir').hide("fast","swing");
       }, 2000);
-  });
+});
+$('#updateAll').click(function () {
+    $('#checkedAll').show("fast","swing");
+    setTimeout(function() {
+        $('#checkedAll').hide("fast","swing");
+      }, 2000);
+});
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
 /*remplir un table de transition apres passage par alphabet*/
@@ -705,6 +922,51 @@ function miroir(){
 function updateAll(){
     updateReduction();
     updateDeterministe();
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function lecture(){
+    var mot = document.getElementById("aLire").value;
+    var alphabets=mot.split("");
+    var reconnu=false,continu=true;
+    var i=0;
+    var etat=getEtatInit();
+    while((i<alphabets.length) && continu) {
+        console.log(etat);
+        var alphabet=alphabets[i];
+        var element=new Map();
+        element=detMapG.get(etat);
+        if (element.has(alphabet)){
+            var elementSet=element.get(alphabet);
+            var SetToTab=[];
+            for (var value of elementSet){
+                SetToTab.push(value);
+            }
+            SetToTab.sort();
+            etat=SetToTab.toString();         
+        }
+        else{
+            continu=false;
+        }
+        i++;
+    }
+    var detFin=[];
+    for (var element of detFinG){
+        var i=0;
+        while (i<element.length){
+            value=element.shift();
+            element.push(value.trim());
+            i++;
+        }
+        console.log(element);
+        element.sort();
+        detFin.push(element.toString());
+    }
+    console.log(etat);
+    console.log(detFin);
+    if ((continu) && (detFin.includes(etat))) {reconnu=true};
+    alert(reconnu);
+    return reconnu;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/

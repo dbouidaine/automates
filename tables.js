@@ -328,7 +328,19 @@ $BTN5.on('click', () => {
   $EXPORT5.text(JSON.stringify(data));
 });
 /*-----------------------------------------------*/
-
+ /*-----------------SaveFile------------------------------*/
+ $(document).ready(function () {
+    $('#saveFile').click(function (){
+      var html = $('html').clone();
+      var htmlString = html.html();
+      var path=$('#path').val();
+      var blob = new Blob([htmlString], {
+        type: "application/json;utf-8"
+      });
+      saveAs(blob,path + ".html");
+   })
+ })
+ /*-------------------------------------------------------------*/
  /*-----------------editableTable2------------------------------*/
 /*const $tableID2 = $('#table2');
 const $BTN2 = $('#export-btn2');
