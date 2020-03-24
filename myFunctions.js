@@ -1,4 +1,4 @@
-var detMapGlobal,detFinG;
+var detMapG,detFinG;
 /*--------------------------------------------------------------*/
 /*Les Transitions introduit par l'utilisateur*/
 function getTransitions(){
@@ -429,6 +429,7 @@ function updateReduction() {
         }
         i++;
     }
+    return false;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -439,8 +440,23 @@ function updateDeterministe() {
     var epObj=deleteEpsilons(),epFin=epObj.etatsFin,epSet=epObj.tranSet;
     var alphaObj=toAlpha(epObj),alphaFin=alphaObj.etatsFin,alphaMap=alphaObj.alphaMap;
     var detMap=determinist(alphaObj);
-    detMapGlobal=detMap;
     var comMap=new Map(detMap);
+    detMapG=new Map();
+    for (var detKey of detMap.keys()){
+        var GVal=new Map();//Gval Values
+        var GKey=detKey;
+        detMapG.set(GKey,GVal);
+        var detVal=detMap.get(detKey);
+        for (var keyDetVal of detVal.keys()){
+            var keyGVal=keyDetVal;
+            var valGVal=new Set();
+            GVal.set(keyGVal,valGVal);//valGVal Values
+            var valDetVal=detVal.get(keyDetVal);
+            for (var element of valDetVal){
+                valGVal.add(element);
+            }
+        }
+    }
     // Reset eTransitions table
     tableBody.innerHTML = "";
 
@@ -793,6 +809,7 @@ function updateDeterministe() {
         newRow.appendChild(newCell);
         i++;
     }
+    return false;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
@@ -808,35 +825,6 @@ $('#updateAll').click(function () {
         $('#checkedAll').hide("fast","swing");
       }, 2000);
 });
-/*--------------------------------------------------------------*/
-/*--------------------------------------------------------------*/
-/*remplir un table de transition apres passage par alphabet*/
-function updateTransition2() {
-    var tableBody = document.getElementById("reduction"),
-        newRow, newCell,x,key;
-    var redMap=toAlpha();
-    // Reset the table
-    tableBody.innerHTML = "";
-
-    // Build the new table
-    for (key of redMap.keys()) {
-        newRow = document.createElement("tr");
-        tableBody.appendChild(newRow);
-        x=[];
-        x=key.split(",");
-        newCell = document.createElement("td");
-        newCell.textContent = x[0];
-        newRow.appendChild(newCell);
-        newCell = document.createElement("td");
-        newCell.textContent = x[1];
-        newRow.appendChild(newCell);
-        newCell = document.createElement("td");
-        val = redMap.get(key);
-        val.sort();
-        newCell.textContent = val.toString();
-        newRow.appendChild(newCell);
-    }
-}
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
 function miroir(){
@@ -922,10 +910,14 @@ function miroir(){
 function updateAll(){
     updateReduction();
     updateDeterministe();
+    return false;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
 function lecture(){
+    if (detMapG==null){
+        alert("Veuillez d'abord mettre a jours votre automate !");
+    }
     var mot = document.getElementById("aLire").value;
     var alphabets=mot.split("");
     var reconnu=false,continu=true;
@@ -962,10 +954,18 @@ function lecture(){
         element.sort();
         detFin.push(element.toString());
     }
-    console.log(etat);
-    console.log(detFin);
     if ((continu) && (detFin.includes(etat))) {reconnu=true};
-    alert(reconnu);
+    var myButton=document.getElementById("lecture");
+    if (reconnu){
+        myButton.classList.replace("btn-light","aqua-gradient");
+        myButton.classList.replace("peach-gradient","aqua-gradient");
+        myButton.innerHTML="Le mot est reconnu par l'automate           etat courant="+etat;
+    }
+    else {
+        myButton.classList.replace("btn-light","peach-gradient");
+        myButton.classList.replace("aqua-gradient","peach-gradient");
+        myButton.innerHTML="Le mot n'est pas reconnu par l'automate";
+    }
     return reconnu;
 }
 /*--------------------------------------------------------------*/
