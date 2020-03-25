@@ -21,7 +21,7 @@
     <div class="flex-center flex-column">
       <div class="section-1 col-12">
         <div class="container mt-3" id="myTP">
-          <h2>TP_THP</h2>
+          <h2>Les Automates</h2>
           <br>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs">
