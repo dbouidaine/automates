@@ -1,4 +1,4 @@
-# THP_TP
+# Les Automates
 <pre>
 Ce projet est un TP sur les automates.
 Qu'est-ce que vous pouvez faire?
