@@ -6,7 +6,7 @@ Qu'est-ce que vous pouvez faire?
     	-Introduire l'etat initial.
     	-Introduire les etats fineaux.
     	-introduire les transitions.
-      (remarque:la case mot vide designe une transition "epsilon") 
+      (remarque:une case vide designe une e-transition) 
    -Effectuer l'operation "Miroir" qui donne le miroir de l'automate introduit.
    -Reduction de l'automate.
    -Elimination des e-transitions.
