@@ -15,3 +15,4 @@ Qu'est-ce que vous pouvez faire?
    -Le complement d'un automate simple deterministe.
    -La reconnaissance d'un mot.
 </pre>
+environnement GitHub: https://dbouidaine.github.io/automates/
