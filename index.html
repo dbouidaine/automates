@@ -21,7 +21,41 @@
     <div class="flex-center flex-column">
       <div class="section-1 col-12">
         <div class="container mt-3" id="myTP">
-          <h2>Les Automates</h2>
+          <div class="d-flex">
+            <h2 class="col-10">Les Automates</h2>
+            <!-- Button trigger modal -->
+            <button id="modalActivate" type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#exampleModalPreview">
+              <i class="far fa-3x fa-question-circle"></i>
+            </button>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade right" id="exampleModalPreview" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true" data-backdrop='false'>
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalPreviewLabel">Remarques</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  1. Après que vous définissez votre automate, cliquer sur le bouton METTRE A JOUR <br>
+                  2. Vous pouvez effectuer l'opération miroir sur l'automate en cliquant sur le bouton MIROIR, n'oubliez pas de mettre à jour l'automate après cette opération<br>
+                  3. A chaque fois que vous modifier quelque chose dans l'onglet "Introduire" , vous devez mettre à jour l'automate <br>
+                  4. La transition "epsilon" est designée par une case de transition vide <br>
+                  <br><br><br>
+                  Pour nous contacter: <br>
+                  BOUCHERIR Mohamed-Zineddine: hm_boucherir@esi.dz <br>
+                  BOUIDAINE Diaeddin: hd_bouidaine@esi.dz
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
           <br>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs">
