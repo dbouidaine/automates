@@ -1,6 +1,6 @@
 # Les Automates
 <pre>
-Ce projet est un TP sur les automates.
+Ce projet est fait pour un TP sur les automates.
 Qu'est-ce que vous pouvez faire?
    -Introduire un automate:
     	-Introduire l'etat initial.
