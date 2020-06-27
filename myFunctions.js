@@ -139,7 +139,7 @@ function fusionAll(){
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-/*la reduction de la table de transitions, il fait un appel a la fonction reduc, cette foncion retourne une table 
+/*la reduction de la table de transitions, il fait un appel a la fonction reduce, cette foncion retourne une table 
 contenant les elements a ne pas eliminer ( On elimine les elements qui n'appartiennent pas a cette table)*/
 function reduction(){
     var etatInit=getEtatInit();
@@ -155,9 +155,9 @@ function reduction(){
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
-/*la fonction recursive de reduction, le principe c'est de partir de l'etat vers tous les etats qui peut y aller,
+/*la fonction recursive de reduction, le principe c'est de partir de l'etat initial vers tous les etats qui peut y aller,
 a chaque fois on elimine le chemin que l'on y passe , et on sauvegarde l'etat dans une table (visited), si avant
-la sortie on passe par un element dans redList on fusionne la table visible avec la table redList, redList contient au debut la premiere 
+la sortie on passe par un element dans redList on fusionne la table visited avec la table redList, redList contient au debut la premiere 
 etat final que l'on y passe*/
 function reduce(redObj){
     var etat=redObj.etat;
