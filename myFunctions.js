@@ -910,6 +910,8 @@ function miroir(){
 function updateAll(){
     updateReduction();
     updateDeterministe();
+    var result=Viz(detToDotScript(), 'svg', 'dot');
+    $('#graph').html(result);
     return false;
 }
 /*--------------------------------------------------------------*/
@@ -972,5 +974,45 @@ function lecture(){
     }
     return reconnu;
 }
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+function detToDotScript(){
+    var init=getEtatInit();
+    var fin=``;
+    for(state of detFinG){
+        fin=fin+`"`+state.toString()+`"`+",";
+    }
+    fin=fin.replace(/\s+/g, '').trim();
+    fin=fin.slice(0,-1);
+    var dotScript=`digraph finite_state_machine {
+        rankdir = LR;
+        node [shape = circle]; `+init+`;
+        node [shape = doublecircle];`+fin+`;
+        node [shape = plaintext];
+        "" -> `+init+` [label = "start"];
+        node [shape = circle];
+        `;
+    var transition="";
+    for(var key of detMapG.keys()){
+        var MapSon=detMapG.get(key);
+        for(var keySon of MapSon.keys()){
+            var SetSon=MapSon.get(keySon);
+            var chaine=Array.from(SetSon).sort().join(',');
+
+                
+                transition='"'+key+'" ->"'+chaine+'" [label="'+keySon+'"];';
+                dotScript=dotScript+transition+`
+                `;
+       
+        }   
+    }
+    dotScript=dotScript+`}`;
+    console.log(dotScript);
+    return dotScript;
+
+}
+/*--------------------------------------------------------------*/
+/*--------------------------------------------------------------*/
+
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
