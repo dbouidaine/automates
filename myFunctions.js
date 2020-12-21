@@ -979,9 +979,10 @@ function lecture(){
     }
     if ((continu) && (detFin.includes(etat))) {reconnu=true};
     var myButton=document.getElementById("lecture");
-    var elements = $('text:contains("'+etat+'")').each(function( index ) {
-        if ($(this).html().length==etat.length){
-            $(this).prev("ellipse").attr('fill','yellow');
+    var elements = $('text:contains("'+etat+'")').each(function( index , element) {
+        if ($(element).html()==etat){
+            console.log("Oui monsieur");
+            $(element).prev("ellipse").attr('fill','yellow');
         }
       });
 
@@ -990,10 +991,11 @@ function lecture(){
             myButton.classList.replace("btn-light","aqua-gradient");
             myButton.classList.replace("peach-gradient","aqua-gradient");
             myButton.innerHTML="Le mot est reconnu par l'automate | etat courant="+etat;
-            var elements = $('text:contains("'+etat+'")').each(function( index ) {
-                if ($(this).html().length==etat.length){
-                    $(this).prev("ellipse").attr('fill','none');
-                    $('text:contains("'+etat+'")').prev("ellipse").prev("ellipse").attr('fill','greenyellow');
+            elements = $('text:contains("'+etat+'")').each(function( index , element ) {
+                if ($(element).html()==etat){
+                    console.log("Oui monsieur");
+                    $(element).prev("ellipse").attr('fill','none');
+                    $(element).prev("ellipse").prev("ellipse").attr('fill','greenyellow');
                 }
               });  
         },150)
@@ -1004,9 +1006,9 @@ function lecture(){
             myButton.classList.replace("aqua-gradient","peach-gradient");
             myButton.innerHTML="Le mot n'est pas reconnu par l'automate | etat courant="+etat;
             if(red){
-                var elements = $('text:contains("'+etat+'")').each(function( index ) {
-                    if ($(this).html().length===etat.length){
-                        $(this).prev("ellipse").attr('fill','red');
+                elements = $('text:contains("'+etat+'")').each(function( index , element ) {
+                    if ($(element).html()==etat){
+                        $(element).prev("ellipse").attr('fill','red');
                     }
                 });
             }   
