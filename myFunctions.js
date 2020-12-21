@@ -948,7 +948,6 @@ function lecture(){
     var i=0;
     var etat=getEtatInit();
     while((i<alphabets.length) && continu) {
-        console.log(etat);
         var alphabet=alphabets[i];
         var element=new Map();
         element=detMapG.get(etat);
@@ -975,20 +974,28 @@ function lecture(){
             element.push(value.trim());
             i++;
         }
-        console.log(element);
         element.sort();
         detFin.push(element.toString());
     }
     if ((continu) && (detFin.includes(etat))) {reconnu=true};
     var myButton=document.getElementById("lecture");
-    setTimeout(function(){$('text:contains("'+etat+'")').prev().attr('fill','yellow');},150);
+    var elements = $('text:contains("'+etat+'")').each(function( index ) {
+        if ($(this).html().length==etat.length){
+            $(this).prev("ellipse").attr('fill','yellow');
+        }
+      });
+
     if (reconnu){
         setTimeout(function(){
             myButton.classList.replace("btn-light","aqua-gradient");
             myButton.classList.replace("peach-gradient","aqua-gradient");
             myButton.innerHTML="Le mot est reconnu par l'automate | etat courant="+etat;
-            $('text:contains("'+etat+'")').prev("ellipse").attr('fill','none');
-            $('text:contains("'+etat+'")').prev("ellipse").prev("ellipse").attr('fill','greenyellow');
+            var elements = $('text:contains("'+etat+'")').each(function( index ) {
+                if ($(this).html().length==etat.length){
+                    $(this).prev("ellipse").attr('fill','none');
+                    $('text:contains("'+etat+'")').prev("ellipse").prev("ellipse").attr('fill','greenyellow');
+                }
+              });  
         },150)
     }
     else {
@@ -996,7 +1003,13 @@ function lecture(){
             myButton.classList.replace("btn-light","peach-gradient");
             myButton.classList.replace("aqua-gradient","peach-gradient");
             myButton.innerHTML="Le mot n'est pas reconnu par l'automate | etat courant="+etat;
-            if(red){$('text:contains("'+etat+'")').prev("ellipse").attr('fill','red');}
+            if(red){
+                var elements = $('text:contains("'+etat+'")').each(function( index ) {
+                    if ($(this).html().length===etat.length){
+                        $(this).prev("ellipse").attr('fill','red');
+                    }
+                });
+            }   
         },150)
     }
     return reconnu;
