@@ -2,3 +2,6 @@
     padding-top: 1.4rem;
     }
     
+.selected-node {
+    background-color: greenyellow;
+}

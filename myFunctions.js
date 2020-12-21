@@ -912,11 +912,33 @@ function updateAll(){
     updateDeterministe();
     var result=Viz(detToDotScript(), 'svg', 'dot');
     $('#graph').html(result);
+    var init=getEtatInit();
+    var fins=[];
+    for (var element of detFinG){
+        var i=0;
+        while (i<element.length){
+            value=element.shift();
+            element.push(value.trim());
+            i++;
+        }
+        console.log(element);
+        element.sort();
+        fins.push(element.toString());
+    }
+    if(fins.includes(init)){
+        $('text:contains("'+init+'")').prev("ellipse").prev().attr('fill','greenyellow');
+        console.log("Yes");
+    }
+    else{
+        $('text:contains("'+init+'")').prev("ellipse").attr('fill','yellow');
+    }
     return false;
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
 function lecture(){
+    $('text').prev("ellipse").attr("fill","none");
+    $('text').prev("ellipse").prev("ellipse").attr("fill","none");
     if (detMapG==null){
         alert("Veuillez d'abord mettre a jours votre automate !");
     }
@@ -941,6 +963,7 @@ function lecture(){
         }
         else{
             continu=false;
+            var red=true;
         }
         i++;
     }
@@ -958,11 +981,14 @@ function lecture(){
     }
     if ((continu) && (detFin.includes(etat))) {reconnu=true};
     var myButton=document.getElementById("lecture");
+    setTimeout(function(){$('text:contains("'+etat+'")').prev().attr('fill','yellow');},150);
     if (reconnu){
         setTimeout(function(){
             myButton.classList.replace("btn-light","aqua-gradient");
             myButton.classList.replace("peach-gradient","aqua-gradient");
             myButton.innerHTML="Le mot est reconnu par l'automate | etat courant="+etat;
+            $('text:contains("'+etat+'")').prev("ellipse").attr('fill','none');
+            $('text:contains("'+etat+'")').prev("ellipse").prev("ellipse").attr('fill','greenyellow');
         },150)
     }
     else {
@@ -970,6 +996,7 @@ function lecture(){
             myButton.classList.replace("btn-light","peach-gradient");
             myButton.classList.replace("aqua-gradient","peach-gradient");
             myButton.innerHTML="Le mot n'est pas reconnu par l'automate | etat courant="+etat;
+            if(red){$('text:contains("'+etat+'")').prev("ellipse").attr('fill','red');}
         },150)
     }
     return reconnu;
@@ -985,11 +1012,25 @@ function detToDotScript(){
     fin=fin.replace(/\s+/g, '').trim();
     fin=fin.slice(0,-1);
     var dotScript=`digraph finite_state_machine {
-        rankdir = LR;
-        node [shape = circle]; `+init+`;
-        node [shape = doublecircle];`+fin+`;
+        rankdir = LR;`;
+    var fins=[];
+    for (var element of detFinG){
+        var i=0;
+        while (i<element.length){
+            value=element.shift();
+            element.push(value.trim());
+            i++;
+        }
+        console.log(element);
+        element.sort();
+        fins.push(element.toString());
+    }
+    if(!(fins.includes(init))){
+        dotScript=dotScript+`node [shape = circle]; "`+init+`";`;
+    }
+    dotScript=dotScript+`node [shape = doublecircle];`+fin+`;
         node [shape = plaintext];
-        "" -> `+init+` [label = "start"];
+        "" -> "`+init+`" [label = "start"];
         node [shape = circle];
         `;
     var transition="";
@@ -997,19 +1038,15 @@ function detToDotScript(){
         var MapSon=detMapG.get(key);
         for(var keySon of MapSon.keys()){
             var SetSon=MapSon.get(keySon);
-            var chaine=Array.from(SetSon).sort().join(',');
-
-                
+            var chaine=Array.from(SetSon).sort().join(','); 
                 transition='"'+key+'" ->"'+chaine+'" [label="'+keySon+'"];';
                 dotScript=dotScript+transition+`
-                `;
-       
+                `;     
         }   
     }
     dotScript=dotScript+`}`;
     console.log(dotScript);
     return dotScript;
-
 }
 /*--------------------------------------------------------------*/
 /*--------------------------------------------------------------*/
