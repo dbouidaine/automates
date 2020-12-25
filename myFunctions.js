@@ -927,7 +927,6 @@ function updateAll(){
     }
     if(fins.includes(init)){
         $('text:contains("'+init+'")').prev("ellipse").prev().attr('fill','greenyellow');
-        console.log("Yes");
     }
     else{
         $('text:contains("'+init+'")').prev("ellipse").attr('fill','yellow');
@@ -981,7 +980,6 @@ function lecture(){
     var myButton=document.getElementById("lecture");
     var elements = $('text:contains("'+etat+'")').each(function( index , element) {
         if ($(element).html()==etat){
-            console.log("Oui monsieur");
             $(element).prev("ellipse").attr('fill','yellow');
         }
       });
@@ -993,7 +991,6 @@ function lecture(){
             myButton.innerHTML="Le mot est reconnu par l'automate | etat courant="+etat;
             elements = $('text:contains("'+etat+'")').each(function( index , element ) {
                 if ($(element).html()==etat){
-                    console.log("Oui monsieur");
                     $(element).prev("ellipse").attr('fill','none');
                     $(element).prev("ellipse").prev("ellipse").attr('fill','greenyellow');
                 }
