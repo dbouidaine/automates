@@ -1,6 +1,5 @@
-# Les Automates
+# Automates Sim
 <pre>
-Ce projet est fait pour un TP sur les automates.
 Qu'est-ce que vous pouvez faire?
    -Introduire un automate:
     	-Introduire l'etat initial.
